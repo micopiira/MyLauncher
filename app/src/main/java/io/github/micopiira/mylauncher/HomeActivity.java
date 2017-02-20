@@ -2,8 +2,11 @@ package io.github.micopiira.mylauncher;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -13,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @BindView(R.id.apps_list) GridView appList;
 
@@ -45,6 +48,16 @@ public class HomeActivity extends Activity {
             Intent i = getPackageManager().getLaunchIntentForPackage(getApps().get(pos).getName());
             startActivity(i);
         });
+        appList.setOnItemLongClickListener((parent, view, position, id) -> {
+            Intent i = new Intent(this, PreferencesActivity.class);
+            startActivity(i);
+            return true;
+        });
+
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        recreate();
+    }
 }

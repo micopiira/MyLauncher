@@ -6,8 +6,9 @@
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PreferencesActivity"/>
         <activity
-            android:name="io.github.micopiira.mylauncher.HomeActivity"
+            android:name=".HomeActivity"
             android:label="Simple Launcher Home"
             android:theme="@style/CustomTheme"
             android:launchMode="singleTask"

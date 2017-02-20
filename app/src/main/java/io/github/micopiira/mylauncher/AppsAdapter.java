@@ -1,6 +1,9 @@
 package io.github.micopiira.mylauncher;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +25,7 @@ class AppsAdapter extends ArrayAdapter<AppDetail> {
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
 
         AppDetail app = getItem(position);
 
@@ -32,22 +35,26 @@ class AppsAdapter extends ArrayAdapter<AppDetail> {
             holder = (ViewHolder) convertView.getTag();
         } else {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
-            holder = new ViewHolder(convertView);
+            holder = new ViewHolder();
+            holder.appLabel = (TextView) convertView.findViewById(R.id.item_app_label);
+            holder.appIcon = (ImageView) convertView.findViewById(R.id.item_app_icon);
+
             convertView.setTag(holder);
         }
+
         holder.appIcon.setImageDrawable(app.getIcon());
         holder.appLabel.setText(app.getLabel());
+
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        holder.appLabel.setTextColor(Color.parseColor(SP.getString("label_color", "#ffffff")));
 
         return convertView;
     }
 
-    static class ViewHolder {
-        @BindView(R.id.item_app_icon) ImageView appIcon;
-        @BindView(R.id.item_app_label) TextView appLabel;
-        @SuppressWarnings("WeakerAccess")
-        public ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
+    private static class ViewHolder {
+        ImageView appIcon;
+        TextView appLabel;
     }
 
 }
