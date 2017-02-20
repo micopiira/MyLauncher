@@ -7,4 +7,12 @@
         android:singleLine="true"
         android:title="Label color"
         android:key="label_color" />
+
+    <EditTextPreference
+        android:defaultValue="5"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Grid columns"
+        android:key="grid_columns" />
+
 </PreferenceScreen>

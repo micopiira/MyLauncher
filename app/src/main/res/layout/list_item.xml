@@ -6,8 +6,9 @@
     android:orientation="vertical">
     <ImageView
         android:id="@+id/item_app_icon"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
         android:layout_gravity="center"
         android:background="?android:attr/selectableItemBackground"
         android:paddingBottom="5dp"/>

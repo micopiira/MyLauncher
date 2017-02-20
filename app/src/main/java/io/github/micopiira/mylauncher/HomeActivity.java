@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -42,6 +43,9 @@ public class HomeActivity extends Activity implements SharedPreferences.OnShared
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apps_list);
         ButterKnife.bind(this);
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(this);
+
+        appList.setNumColumns(Integer.parseInt(SP.getString("grid_columns", "5")));
 
         appList.setAdapter(new AppsAdapter(this, getApps()));
         appList.setOnItemClickListener((av, v, pos, id) -> {

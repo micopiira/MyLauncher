@@ -13,8 +13,7 @@
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="auto_fit"
-        android:columnWidth="80dp"
+        android:numColumns="5"
         android:stretchMode="columnWidth"
         android:listSelector="@android:color/transparent">
     </GridView>
