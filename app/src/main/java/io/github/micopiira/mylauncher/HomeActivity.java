@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -32,8 +33,14 @@ public class HomeActivity extends Activity implements SharedPreferences.OnShared
             app.setLabel(resolveInfo.loadLabel(getPackageManager()).toString());
             app.setName(resolveInfo.activityInfo.packageName);
             app.setIcon(resolveInfo.activityInfo.loadIcon(getPackageManager()));
+            app.setIntent(getPackageManager().getLaunchIntentForPackage(resolveInfo.activityInfo.packageName));
             apps.add(app);
         }
+        AppDetail launcherSettings = new AppDetail();
+        launcherSettings.setLabel("SETTINGS");
+        launcherSettings.setIcon(getPackageManager().getApplicationIcon(getApplicationInfo()));
+        launcherSettings.setIntent(new Intent(this, PreferencesActivity.class));
+        apps.add(launcherSettings);
         Collections.sort(apps, (o1, o2) -> o1.getLabel().compareToIgnoreCase(o2.getName()));
         return apps;
     }
@@ -48,14 +55,8 @@ public class HomeActivity extends Activity implements SharedPreferences.OnShared
         appList.setNumColumns(Integer.parseInt(SP.getString("grid_columns", "5")));
 
         appList.setAdapter(new AppsAdapter(this, getApps()));
-        appList.setOnItemClickListener((av, v, pos, id) -> {
-            Intent i = getPackageManager().getLaunchIntentForPackage(getApps().get(pos).getName());
-            startActivity(i);
-        });
-        appList.setOnItemLongClickListener((parent, view, position, id) -> {
-            Intent i = new Intent(this, PreferencesActivity.class);
-            startActivity(i);
-            return true;
+        appList.setOnItemClickListener((parent, view, position, id) -> {
+            startActivity(getApps().get(position).getIntent());
         });
 
     }
