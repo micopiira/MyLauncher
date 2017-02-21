@@ -41,7 +41,7 @@ public class HomeActivity extends Activity implements SharedPreferences.OnShared
         launcherSettings.setIcon(getPackageManager().getApplicationIcon(getApplicationInfo()));
         launcherSettings.setIntent(new Intent(this, PreferencesActivity.class));
         apps.add(launcherSettings);
-        Collections.sort(apps, (o1, o2) -> o1.getLabel().compareToIgnoreCase(o2.getName()));
+        Collections.sort(apps, (o1, o2) -> o1.getLabel().compareToIgnoreCase(o2.getLabel()));
         return apps;
     }
 
