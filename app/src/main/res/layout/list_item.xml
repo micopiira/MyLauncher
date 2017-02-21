@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:layout_gravity="center"
-        android:background="?android:attr/selectableItemBackground"
         android:paddingBottom="5dp"/>
     <TextView
         android:id="@+id/item_app_label"

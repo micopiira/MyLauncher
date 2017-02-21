@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="5"
-        android:stretchMode="columnWidth"
-        android:listSelector="@android:color/transparent">
+        android:stretchMode="columnWidth">
     </GridView>
 </LinearLayout>
