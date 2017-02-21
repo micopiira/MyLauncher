@@ -9,7 +9,7 @@
         <activity android:name=".PreferencesActivity"/>
         <activity
             android:name=".HomeActivity"
-            android:label="Simple Launcher Home"
+            android:label="@string/app_name"
             android:theme="@style/CustomTheme"
             android:launchMode="singleTask"
             android:stateNotNeeded="true"
