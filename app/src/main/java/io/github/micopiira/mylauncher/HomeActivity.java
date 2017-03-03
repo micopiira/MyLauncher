@@ -2,6 +2,7 @@ package io.github.micopiira.mylauncher;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.GridView;
@@ -17,6 +18,10 @@ public class HomeActivity extends Activity implements SharedPreferences.OnShared
     @BindView(R.id.apps_list) GridView appList;
     @BindString(R.string.app_name) String appName;
 
+    private boolean isPortrait() {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +32,9 @@ public class HomeActivity extends Activity implements SharedPreferences.OnShared
         List<AppDetail> apps = appRepository.findAll();
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(this);
 
-        appList.setNumColumns(Integer.parseInt(SP.getString("grid_columns", "5")));
+
+        appList.setNumColumns(Integer.parseInt(SP.getString(isPortrait() ? "grid_columns_portrait" : "grid_columns_landscape", "4")));
+
         appList.setAdapter(new AppsAdapter(this, apps));
         appList.setOnItemClickListener((parent, view, position, id) -> {
             startActivity(apps.get(position).getIntent());

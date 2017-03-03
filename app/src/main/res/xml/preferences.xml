@@ -6,13 +6,20 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="Label color"
-        android:key="label_color" />
+        android:key="label_color"/>
 
     <EditTextPreference
         android:defaultValue="5"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="Grid columns"
-        android:key="grid_columns" />
+        android:title="Grid columns (Portrait)"
+        android:key="grid_columns_portrait"/>
+
+    <EditTextPreference
+        android:defaultValue="5"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Grid columns (Landscape)"
+        android:key="grid_columns_landscape"/>
 
 </PreferenceScreen>
