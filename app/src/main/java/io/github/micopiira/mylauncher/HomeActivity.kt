@@ -29,16 +29,17 @@ class HomeActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListe
         val apps = AppRepository(this, appName).findAll()
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
+        val appsAdapter = AppsAdapter(this, apps)
         appList.numColumns = Integer.parseInt(sharedPreferences.getString(if (isPortrait) "grid_columns_portrait" else "grid_columns_landscape", "4"))
-        appList.adapter = AppsAdapter(this, apps)
-        appList.setOnItemClickListener { _, _, position, _ -> startActivity(apps[position].intent) }
+        appList.adapter = appsAdapter
+        appList.setOnItemClickListener { _, _, position, _ -> startActivity(appsAdapter.filteredApps[position].intent) }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                (appList.adapter as AppsAdapter).filter.filter(p0)
+                appsAdapter.filter.filter(p0)
                 return false
             }
         })
