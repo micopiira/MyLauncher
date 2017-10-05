@@ -6,11 +6,37 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 
-internal class AppsAdapter(context: Context, apps: List<AppDetail>) : ArrayAdapter<AppDetail>(context, 0, apps) {
+internal class AppsAdapter(context: Context, private val apps: List<AppDetail>) : ArrayAdapter<AppDetail>(context, 0, apps), Filterable {
+
+    var filteredApps = apps;
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(p0: CharSequence?): FilterResults {
+                val filterResults = FilterResults()
+                filterResults.values = apps.filter {
+                    if (p0 != null && p0.isNotEmpty()) it.label.contains(p0, true) || it.label.contains(p0, true) else true
+                }
+                return filterResults;
+            }
+
+            override fun publishResults(p0: CharSequence, p1: FilterResults) {
+                filteredApps = p1.values as List<AppDetail>
+                notifyDataSetChanged()
+            }
+        }
+    }
+
+
+    override fun getCount(): Int {
+        return filteredApps.size
+    }
+
+    override fun getItem(position: Int): AppDetail {
+        return filteredApps[position]
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
@@ -28,12 +54,12 @@ internal class AppsAdapter(context: Context, apps: List<AppDetail>) : ArrayAdapt
             convertView.tag = holder
         }
 
-        holder.appIcon!!.setImageDrawable(app!!.icon)
+        holder.appIcon!!.setImageDrawable(app.icon)
         holder.appLabel!!.text = app.label
 
-        val SP = PreferenceManager.getDefaultSharedPreferences(context)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-        holder.appLabel.setTextColor(Color.parseColor(SP.getString("label_color", "#ffffff")))
+        holder.appLabel.setTextColor(Color.parseColor(sharedPreferences.getString("label_color", "#ffffff")))
 
         return convertView
     }

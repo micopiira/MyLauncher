@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.GridView
+import android.widget.SearchView
 
 import butterknife.BindString
 import butterknife.BindView
@@ -14,7 +15,7 @@ import butterknife.ButterKnife
 class HomeActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     @BindView(R.id.apps_list) lateinit var appList: GridView
-
+    @BindView(R.id.searchview) lateinit var searchView: SearchView
     @BindString(R.string.app_name) lateinit var appName: String
 
     private val isPortrait: Boolean
@@ -31,6 +32,16 @@ class HomeActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListe
         appList.numColumns = Integer.parseInt(sharedPreferences.getString(if (isPortrait) "grid_columns_portrait" else "grid_columns_landscape", "4"))
         appList.adapter = AppsAdapter(this, apps)
         appList.setOnItemClickListener { _, _, position, _ -> startActivity(apps[position].intent) }
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                (appList.adapter as AppsAdapter).filter.filter(p0)
+                return false
+            }
+        })
 
     }
 
