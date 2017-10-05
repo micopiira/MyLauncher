@@ -25,11 +25,10 @@ class HomeActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListe
         setContentView(R.layout.activity_apps_list)
         ButterKnife.bind(this)
 
-        val appRepository = AppRepository(this, appName)
-        val apps = appRepository.findAll()
-        val SP = PreferenceManager.getDefaultSharedPreferences(this)
+        val apps = AppRepository(this, appName).findAll()
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-        appList.numColumns = Integer.parseInt(SP.getString(if (isPortrait) "grid_columns_portrait" else "grid_columns_landscape", "4"))
+        appList.numColumns = Integer.parseInt(sharedPreferences.getString(if (isPortrait) "grid_columns_portrait" else "grid_columns_landscape", "4"))
         appList.adapter = AppsAdapter(this, apps)
         appList.setOnItemClickListener { _, _, position, _ -> startActivity(apps[position].intent) }
 
