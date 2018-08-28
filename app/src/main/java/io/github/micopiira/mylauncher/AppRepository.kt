@@ -5,16 +5,17 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 
-class AppRepository(private val context: Context, private val appName: String) : CrudRepository<AppDetail> {
+class AppRepository(context: Context, appName: String) {
 
     private val packageManager: PackageManager = context.packageManager
     private val applicationInfo: ApplicationInfo = context.applicationInfo
+    private val settingsApp = AppDetail(
+            label = "$appName settings",
+            icon = packageManager.getApplicationIcon(applicationInfo),
+            intent = Intent(context, PreferencesActivity::class.java)
+    )
 
-    override fun count(): Long {
-        return findAll().size.toLong()
-    }
-
-    override fun findAll(): List<AppDetail> {
+    fun findAll(): List<AppDetail> {
         val i = Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER)
 
         return packageManager.queryIntentActivities(i, 0).map {
@@ -24,10 +25,6 @@ class AppRepository(private val context: Context, private val appName: String) :
                     icon = it.activityInfo.loadIcon(packageManager),
                     intent = packageManager.getLaunchIntentForPackage(it.activityInfo.packageName)
             )
-        }.plus(AppDetail(
-                label = appName + " settings",
-                icon = packageManager.getApplicationIcon(applicationInfo),
-                intent = Intent(context, PreferencesActivity::class.java)
-        )).sortedBy { it.label }
+        }.plus(settingsApp).sortedBy { it.label }
     }
 }
