@@ -1,20 +1,19 @@
 package io.github.micopiira.mylauncher
 
 import android.app.Activity
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.widget.GridView
 import android.widget.SearchView
 
 import kotlinx.android.synthetic.main.activity_apps_list.*
 
 
-class HomeActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListener {
+class HomeActivity : Activity() {
 
-    private val isPortrait: Boolean
+    private val isPortrait
         get() = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +41,4 @@ class HomeActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListe
 
     override fun onBackPressed() {}
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        recreate()
-    }
 }
