@@ -39,6 +39,18 @@ class HomeActivity : Activity() {
 
     }
 
+    override fun onResume() {
+
+        super.onResume()
+
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("needsReload", false)) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("needsReload",  false).apply()
+            recreate()
+            return
+        }
+
+    }
+
     override fun onBackPressed() {}
 
 }
