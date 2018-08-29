@@ -9,6 +9,7 @@
         android:key="label_color"/>
 
     <EditTextPreference
+        android:inputType="number"
         android:defaultValue="5"
         android:selectAllOnFocus="true"
         android:singleLine="true"
@@ -17,6 +18,7 @@
 
     <EditTextPreference
         android:defaultValue="5"
+        android:inputType="number"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="Grid columns (Landscape)"
