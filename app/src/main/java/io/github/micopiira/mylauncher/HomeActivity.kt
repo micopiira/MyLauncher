@@ -18,15 +18,17 @@ import kotlinx.android.synthetic.main.activity_apps_list.*
 
 class MyReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d(javaClass.name, "Received")
-        HomeActivity.appsAdapter.filteredApps = AppRepository(context!!, context.getString(R.string.app_name)).findAll()
-        HomeActivity.appsAdapter.notifyDataSetChanged()
+        when(intent!!.action) {
+            "android.intent.action.PACKAGE_ADDED", "android.intent.action.PACKAGE_REMOVED" -> {
+                Log.d(javaClass.name, "Received")
+                HomeActivity.appsAdapter.filteredApps = AppRepository(context!!, context.getString(R.string.app_name)).findAll()
+                HomeActivity.appsAdapter.notifyDataSetChanged()
+            }
+        }
     }
 }
 
 class HomeActivity : Activity() {
-
-
 
     companion object {
         lateinit var appsAdapter: AppsAdapter
