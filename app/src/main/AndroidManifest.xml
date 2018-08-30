@@ -14,8 +14,7 @@
             android:launchMode="singleTask"
             android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"
-            android:stateNotNeeded="true"
-            >
+            android:stateNotNeeded="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +25,13 @@
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
+        <receiver android:name=".MyReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 
-internal class AppsAdapter(context: Context, private val apps: List<AppDetail>) : ArrayAdapter<AppDetail>(context, 0, apps), Filterable {
+class AppsAdapter(context: Context, private val apps: List<AppDetail>) : ArrayAdapter<AppDetail>(context, 0, apps), Filterable {
 
     var filteredApps = apps;
 
