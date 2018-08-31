@@ -8,10 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlHighlight">#ffffff</item>
     </style>
+
     <style name="CustomTheme" parent="@style/AppTheme">
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowShowWallpaper">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
+
 </resources>
